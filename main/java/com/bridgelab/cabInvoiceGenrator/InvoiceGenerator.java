@@ -1,21 +1,24 @@
 package com.bridgelab.cabInvoiceGenrator;
 
+import com.bridgelab.cabInvoiceGenrator.model.InvoiceSummary;
 import com.bridgelab.cabInvoiceGenrator.model.Ride;
 
+
 public class InvoiceGenerator {
-	private static final int COST_PER_TIME=1;
-	private static final double MINIMUM_COST_PER_KILOMETER =10;
-	private static final double MINIMUM_FARE=5;
+	private static final double MINIMUM_COST_PER_KILOMETER = 10;
+    private static final int COST_PER_TIME = 1;
+    private static final double MINIMUM_FARE = 5;
 	
-	public double calculateFare(double distance, int time) {
-	double totalFare = distance * MINIMUM_COST_PER_KILOMETER + time * COST_PER_TIME;
-	if(totalFare < MINIMUM_FARE) {	
-	}
-	return MINIMUM_FARE;
-	}
-	
-	public double calculate(Ride[] rides)
-	{
-		return 0;
-	}
+    public double calculateFare(double distance, int time) {
+        double totalFare = (distance * MINIMUM_COST_PER_KILOMETER) + (time * COST_PER_TIME);
+        return Math.max(totalFare, MINIMUM_FARE);
+    }
+
+    public InvoiceSummary calculateFare(Ride[] rides) {
+        double totalFare = 0;
+        for (Ride ride:rides) {
+            totalFare += this.calculateFare(ride.getDistance(), ride.getTime());
+        }
+        return new InvoiceSummary(rides.length, totalFare);
+    }
 }

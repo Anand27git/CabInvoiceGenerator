@@ -1,6 +1,9 @@
 package com.bridgelab.cabInvoiceGenrator;
 
+import com.bridgelab.cabInvoiceGenrator.model.InvoiceSummary;
 import com.bridgelab.cabInvoiceGenrator.model.Ride;
+
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -26,15 +29,13 @@ public class Invoicetestcase {
 		Assert.assertEquals( 5,fare, 0);
 		
 	}
-	
 	@Test
-	public void givenMultipleRides_ShouldReturnTotalFare() {
-		InvoiceGenerator invoiceGenarator = new InvoiceGenerator();
-		Ride[] rides = { new Ride(distance 2.0, time 5),
-					     new Ride(distance 0.1, time)
-		};
-		double fare =invoiceGenarator.calculateFare(rides);
-		Assert.assertEquals(30,fare,0);
-		
-		}
+    public void givenMultipleRides_ShouldReturnInvoiceSummary(){
+        InvoiceGenerator invoiceGenerator= new InvoiceGenerator();
+        Ride[] rides = { new Ride(2.0, 5),
+                new Ride(0.1, 1)};
+        InvoiceSummary summary = invoiceGenerator.calculateFare(rides);
+        InvoiceSummary expectedInvoiceSummary= new InvoiceSummary(2, 30.0);
+        Assert.assertEquals(expectedInvoiceSummary, summary);
+    }
 }
